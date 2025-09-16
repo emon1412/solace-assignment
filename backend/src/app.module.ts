@@ -6,5 +6,6 @@ import { AdvocateModule } from './advocate/advocate.module'
   imports: [AdvocateModule],
   providers: [PrismaService],
 })
+
 export class AppModule {}
 

@@ -4,16 +4,16 @@ import { advocateData } from './data'
 const prisma = new PrismaClient()
 
 async function main() {
-  for (const advocate of advocateData) {
+  for (const { firstName, lastName, city, degree, specialties, yearsOfExperience, phoneNumber } of advocateData) {
     await prisma.advocate.create({
       data: {
-        first_name: advocate.firstName,
-        last_name: advocate.lastName,
-        city: advocate.city,
-        degree: advocate.degree,
-        payload: advocate.specialties,
-        years_of_experience: advocate.yearsOfExperience,
-        phone_number: advocate.phoneNumber,
+        firstName,
+        lastName,
+        city,
+        degree,
+        specialties,
+        yearsOfExperience,
+        phoneNumber,
       },
     })
   }

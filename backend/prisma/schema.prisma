@@ -10,13 +10,13 @@ datasource db {
 
 
 model Advocate {
-  id Int @id @default(autoincrement())
-  first_name String
-  last_name String
-  city String
-  degree String
-  payload Json @default("[]")
-  years_of_experience Int
-  phone_number BigInt
-  created_at DateTime @default(now())
+  id                Int      @id @default(autoincrement())
+  firstName         String   @map("first_name")
+  lastName          String   @map("last_name")
+  city              String
+  degree            String
+  specialties       Json     @default("[]")
+  yearsOfExperience Int      @map("years_of_experience")
+  phoneNumber       String   @map("phone_number")
+  createdAt         DateTime @default(now()) @map("created_at")
 }
