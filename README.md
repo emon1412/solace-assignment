@@ -24,7 +24,7 @@ npm run prisma:migrate
 npm run prisma:generate
 npm run prisma:seed
 ```
-You can reset the database via. This will require you to migrate, generate, and seed again.
+You can reset the database using the following command. You will need to re-run the migration and seed commands after resetting.
 ```bash
 npm run prisma:reset
 ```
