@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+
+model Advocate {
+  id Int @id @default(autoincrement())
+  first_name String
+  last_name String
+  city String
+  degree String
+  payload Json @default("[]")
+  years_of_experience Int
+  phone_number BigInt
+  created_at DateTime @default(now())
+}
