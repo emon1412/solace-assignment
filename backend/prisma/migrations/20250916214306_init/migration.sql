@@ -5,7 +5,7 @@ CREATE TABLE "public"."Advocate" (
     "last_name" TEXT NOT NULL,
     "city" TEXT NOT NULL,
     "degree" TEXT NOT NULL,
-    "specialties" JSONB NOT NULL DEFAULT '[]',
+    "specialties" TEXT[],
     "years_of_experience" INTEGER NOT NULL,
     "phone_number" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

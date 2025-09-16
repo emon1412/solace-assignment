@@ -15,7 +15,7 @@ model Advocate {
   lastName          String   @map("last_name")
   city              String
   degree            String
-  specialties       Json     @default("[]")
+  specialties       String[] // string array to enable searching by specialty
   yearsOfExperience Int      @map("years_of_experience")
   phoneNumber       String   @map("phone_number")
   createdAt         DateTime @default(now()) @map("created_at")

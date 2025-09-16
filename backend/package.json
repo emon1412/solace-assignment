@@ -11,7 +11,7 @@
     "build": "nest build",
     "start:watch": "nest start --watch",
     "format": "prettier --write \"src/**/*.ts\"",
-    "seed": "ts-node prisma/seed.ts",
+    "prisma:seed": "ts-node prisma/seed.ts",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name init"
   },
