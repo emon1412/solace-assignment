@@ -1,6 +1,7 @@
 'use client'
 
 import {
+  AppBar,
   Box,
   Button,
   Container,
@@ -15,38 +16,13 @@ import {
   TableHead,
   TableRow,
   TextField,
+  Toolbar,
   Typography,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
-
-const specialties = [
-  'Bipolar',
-  'LGBTQ',
-  'Medication/Prescribing',
-  'Suicide History/Attempts',
-  'General Mental Health (anxiety, depression, stress, grief, life transitions)',
-  "Men's issues",
-  'Relationship Issues (family, friends, couple, etc)',
-  'Trauma & PTSD',
-  'Personality disorders',
-  'Personal growth',
-  'Substance use/abuse',
-  'Pediatrics',
-  "Women's issues (post-partum, infertility, family planning)",
-  'Chronic pain',
-  'Weight loss & nutrition',
-  'Eating disorders',
-  'Diabetic Diet and nutrition',
-  'Coaching (leadership, career, academic and wellness)',
-  'Life coaching',
-  'Obsessive-compulsive disorders',
-  'Neuropsychological evaluations & testing (ADHD testing)',
-  'Attention and Hyperactivity (ADHD)',
-  'Sleep issues',
-  'Schizophrenia and psychotic disorders',
-  'Learning disorders',
-  'Domestic abuse',
-]
+import { specialties } from './constants'
+import { formatPhoneNumber } from './utils'
+import SpecialtyTag from './SpecialtyTag'
 
 export default function Home() {
   const [advocates, setAdvocates] = useState([])
@@ -82,7 +58,7 @@ export default function Home() {
     setPage(1)
   }
 
-  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleSearchKeyDown = (e: React.KeyboardEvent<Element>) => {
     if (e.key === 'Enter') {
       handleSearchSubmit()
     }
@@ -100,10 +76,14 @@ export default function Home() {
   }
 
   return (
-    <Container sx={{ mt: 4, mb: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Solace Advocates
-      </Typography>
+    <Container sx={{ mt: 4, mb: 4 }} maxWidth="xl">
+      <AppBar position="static" color="transparent" elevation={0} sx={{ borderBottom: 1, mb: 5 }}>
+        <Toolbar>
+          <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+            Solace Advocates
+          </Typography>
+        </Toolbar>
+      </AppBar>
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
         <TextField
@@ -112,10 +92,7 @@ export default function Home() {
           value={searchInput}
           onChange={e => setSearchInput(e.target.value)}
           onKeyDown={e => {
-            if (e.key === 'Enter') {
-              setSearch(searchInput)
-              setPage(1)
-            }
+            handleSearchKeyDown(e)
           }}
         />
         <FormControl sx={{ minWidth: 250 }}>
@@ -133,7 +110,7 @@ export default function Home() {
             </MenuItem>
             {specialties.map((s, i) => (
               <MenuItem key={i} value={s}>
-                {s}
+                { <SpecialtyTag name={s} /> }
               </MenuItem>
             ))}
           </Select>
@@ -149,45 +126,36 @@ export default function Home() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>First Name</TableCell>
-            <TableCell>Last Name</TableCell>
-            <TableCell>City</TableCell>
-            <TableCell>Degree</TableCell>
-            <TableCell>Specialties</TableCell>
-            <TableCell>Years of Experience</TableCell>
-            <TableCell>Phone Number</TableCell>
+            <TableCell><strong>First Name</strong></TableCell>
+            <TableCell><strong>Last Name</strong></TableCell>
+            <TableCell><strong>City</strong></TableCell>
+            <TableCell><strong>Degree</strong></TableCell>
+            <TableCell><strong>Specialties</strong></TableCell>
+            <TableCell><strong>Years of Experience</strong></TableCell>
+            <TableCell><strong>Phone Number</strong></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {advocates.map((advocate: any, index) => (
-            <TableRow key={index}>
-              <TableCell>{advocate.firstName}</TableCell>
-              <TableCell>{advocate.lastName}</TableCell>
-              <TableCell>{advocate.city}</TableCell>
-              <TableCell>{advocate.degree}</TableCell>
-              <TableCell>
-                {(advocate.specialties || []).map((s: string, i: number) => (
-                  <Box
-                    key={i}
-                    component="span"
-                    sx={{
-                      display: 'inline-block',
-                      bgcolor: 'primary.main',
-                      color: 'white',
-                      borderRadius: '12px',
-                      px: 1,
-                      py: 0.5,
-                      mr: 0.5,
-                      mb: 0.5,
-                      fontSize: '0.75rem',
-                    }}
-                  >
-                    {s}
-                  </Box>
+            <TableRow
+              key={index}
+              sx={{
+                backgroundColor: index % 2 === 0 ? 'background.paper' : 'grey.100',
+              }}
+            >
+              <TableCell sx={{ minWidth: 120 }}>{advocate.firstName}</TableCell>
+              <TableCell sx={{ minWidth: 120 }}>{advocate.lastName}</TableCell>
+              <TableCell sx={{ minWidth: 120 }}>{advocate.city}</TableCell>
+              <TableCell sx={{ minWidth: 120 }}>{advocate.degree}</TableCell>
+              <TableCell sx={{ minWidth: 300 }}>
+                {(advocate.specialties || [])
+                .sort()
+                .map((s: string, i: number) => (
+                  <SpecialtyTag key={i} name={s} />
                 ))}
               </TableCell>
-              <TableCell>{advocate.yearsOfExperience}</TableCell>
-              <TableCell>{advocate.phoneNumber}</TableCell>
+              <TableCell sx={{ minWidth: 120 }}>{advocate.yearsOfExperience}</TableCell>
+              <TableCell sx={{ minWidth: 140 }}>{formatPhoneNumber(advocate.phoneNumber)}</TableCell>
             </TableRow>
           ))}
         </TableBody>

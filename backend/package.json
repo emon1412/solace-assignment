@@ -7,13 +7,14 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "start": "npm run prisma:generate && nest start",
+    "start": "nest start",
     "build": "nest build",
     "start:watch": "nest start --watch",
     "format": "prettier --write \"src/**/*.ts\"",
     "prisma:seed": "ts-node prisma/seed.ts",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev --name init"
+    "prisma:migrate": "prisma migrate dev --name init",
+    "prisma:reset": "prisma migrate reset --force --skip-seed"
   },
   "dependencies": {
     "@nestjs/cli": "^11.0.10",
