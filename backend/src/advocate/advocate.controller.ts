@@ -35,10 +35,13 @@ export class AdvocateController {
 
     const where: Prisma.AdvocateWhereInput = filters.length > 0 ? { AND: filters } : {}
 
+    const take = Number(limit)
+    const skip = (Number(page) - 1) * take
+
     const { items, total } = await this.advocateService.findAll({
       where,
-      skip: Number((page - 1) * limit),
-      take: Number(limit),
+      skip,
+      take,
     })
 
     return { items, total }
